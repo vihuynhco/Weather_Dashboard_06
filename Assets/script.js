@@ -32,16 +32,50 @@ var dateFour = document.querySelector('#date4');
 var dateFive = document.querySelector('#date5');
 var dayTwotemp = document.querySelector('#day2temp');
 var dayTwowind = document.querySelector('#day2wind');
-var dayTwohumidty = document.querySelector('#day2humidity');
+var dayTwohumidity = document.querySelector('#day2humidity');
 
 console.log(currentCondition);
 
 $(document).ready(function () {
-  $(searchBtn).click(function (event) {
+  $("#search-city-field").submit(function (event) {
     event.preventDefault();
     var searchInput = document.querySelector("#search-input").value.trim();
-    console.log(searchInput);
+    if (searchInput != "") {
+      fetch(
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+          searchInput +
+          "&appid=" +
+          weatherApiKey +
+          "&units=imperial"
+      )
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+       var currentCondition = document.querySelector("#current-condition");
+       currentCondition.innerHTML = "";
 
+       var liElCityName = document.createElement("li");
+        liElCityName.textContent = "City: " + data.name;
+        currentCondition.appendChild(liElCityName);
+
+        var liEltemp = document.createElement("li");
+        liEltemp.textContent = "Temperature: " + data.main.temp + " F";
+        console.log(liEltemp);
+        currentCondition.appendChild(liEltemp);
+
+        var liElspeed = document.createElement("li");
+        liElspeed.textContent = "Wind Speed: " + data.wind.speed + " MPH";
+        currentCondition.appendChild(liElspeed);
+
+        var liElhumidity = document.createElement("li");
+        liElhumidity.textContent = "Humidity: " + data.main.humidity;
+        currentCondition.appendChild(liElhumidity);
+      });
+    }
+
+
+//fething the 5 day forecast
     if (searchInput != "") {
       fetch(
         "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -56,60 +90,58 @@ $(document).ready(function () {
         .then(function (data) {
           console.log(data);
           console.log(data.name);
-          var liElCityName = document.createElement("li");
-          liElCityName.textContent = "City: " + data.name;
-          currentCondition.appendChild(liElCityName);
+          var dateOne = document.querySelector('#date1');
+          var dateTwo = document.querySelector('#date2');
+          var dateThree = document.querySelector('#date3');
+          var dateFour = document.querySelector('#date4');
+          var dateFive = document.querySelector('#date5');
 
-          var liEltemp = document.createElement("li");
-          liEltemp.textContent = "Temperature: " + data.main.temp + " F";
-          console.log(liEltemp);
-          currentCondition.appendChild(liEltemp);
+          dateOne.textContent = "";
+          dateTwo.textContent = "";
+          dateThree.textContent = "";
+          dateFour.textContent = "";
+          dateFive.textContent = "";
 
-          var liElspeed = document.createElement("li");
-          liElspeed.textContent = "Winde Speed: " + data.wind.speed + " MPH";
-          currentCondition.appendChild(liElspeed);
+          console.log(dateOne.textContent) 
 
-          var liElhumidity = document.createElement("li");
-          liElhumidity.textContent = "Humidity: " + data.main.humidity;
-          currentCondition.appendChild(liElhumidity);
+          var day2temp = document.querySelector('#day2temp');
+          var day2wind = document.querySelector('#day2wind');
+          var day2humidity = document.querySelector('#day2humidity');
 
-          fetch(
-            "https:api.openweathermap.org/data/2.5/forecast?q=" +
-              searchInput +
-              "&appid=" +
-              weatherApiKey +
-              "&units=imperial"
-          )
-            .then(function (response) {
-              return response.json();
-            })
-            .then(function (data) {
-               
-                dateOne.textContent = data.list[0].dt_txt
-                dateTwo.textContent = data.list[1].dt_txt
-                dateThree.textContent = data.list[2].dt_txt
-                dateFour.textContent = data.list[3].dt_txt
-                dateFive.textContent = data.list[4].dt_txt
-                day2temp.textContent = data.list[1].main.temp
-                console.log(dateOne.textContent) 
-             
-             
+          day2temp.textContent = "Temperature: " + data.main.temp + " F";
+          day2wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
+          day2humidity.textContent = "Humidity: " + data.main.humidity;
 
-              console.log(data.list[0].main.temp);
-              console.log(data.list[0].wind.speed);
-              console.log(data.list[0].main.humidity);
-              console.log(data.list[0].dt_txt);
-              console.log(data.list[1].main.temp);
-              console.log(data.list[1].wind.speed);
-              console.log(data.list[1].main.humidity);
-              console.log(data.list[1].dt_txt);
+          var day3temp = document.querySelector('#day3temp');
+          var day3wind = document.querySelector('#day3wind');
+          var day3humidity = document.querySelector('#day3humidity');
 
-            });
-            
+          day3temp.textContent = "Temperature: " + data.main.temp + " F";
+          day3wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
+          day3humidity.textContent = "Humidity: " + data.main.humidity;
+
+          var day4temp = document.querySelector('#day4temp');
+          var day4wind = document.querySelector('#day4wind');
+          var day4humidity = document.querySelector('#day4humidity');
+        
+          day4temp.textContent = "Temperature: " + data.main.temp + " F";
+          day4wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
+          day4humidity.textContent = "Humidity: " + data.main.humidity;
+
+          var day5temp = document.querySelector('#day5temp');
+          var day5wind = document.querySelector('#day5wind');
+          var day5humidity = document.querySelector('#day5humidity');
+
+          day5temp.textContent = "Temperature: " + data.main.temp + " F";
+          day5wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
+          day5humidity.textContent = "Humidity: " + data.main.humidity;
+
         });
     }
+          
   });
 });
+
 
 //searchInput.textContent = recentSearches;
 
