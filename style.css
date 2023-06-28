@@ -1,0 +1,12 @@
+.header {
+    background: #3e0f8f;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    
+  }
+  
+.header .navbar-nav li a {
+        color: #fff;
+    }

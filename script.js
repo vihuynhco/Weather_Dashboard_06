@@ -14,8 +14,7 @@
 
 var requestUrl = "api.openweathermap.org/data/2.5/weather?q=";
 var weatherApiKey = "c2b52cde2160b0f2799bab8a09974372";
-
-var searchBtn = document.querySelector(".btn");
+var searchBtn = document.querySelector(".btn-custom");
 var searchInput = document.querySelector("#search-input");
 
 var recentSearches = localStorage.getItem("recentSearches");
@@ -33,17 +32,29 @@ var dateFive = document.querySelector('#date5');
 var dayTwotemp = document.querySelector('#day2temp');
 var dayTwowind = document.querySelector('#day2wind');
 var dayTwohumidity = document.querySelector('#day2humidity');
+var dayThreetemp = document.querySelector('#day3temp');
+var dayThreewind = document.querySelector('#day3wind');
+var dayThreehumidity = document.querySelector('#day3humidity');
+var dayFourtemp = document.querySelector('#day4temp');
+var dayFourwind = document.querySelector('#day4wind');
+var dayFourhumidity = document.querySelector('#day4humidity');
+var dayFivetemp = document.querySelector('#day5temp');
+var dayFivewind = document.querySelector('#day5wind');
+var dayFivehumidity = document.querySelector('#day5humidity');
+
+document.addEventListener("DOMContentLoaded", function () {
 
 console.log(currentCondition);
 
-$(document).ready(function () {
-  $("#search-city-field").submit(function (event) {
-    event.preventDefault();
-    var searchInput = document.querySelector("#search-input").value.trim();
-    if (searchInput != "") {
+//fetching the current weather
+searchBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  var searchInputValue = searchInput.value.trim();
+  console.log(searchInput);
+    if (searchInputValue != "") {
       fetch(
         "https://api.openweathermap.org/data/2.5/weather?q=" +
-          searchInput +
+          searchInputValue +
           "&appid=" +
           weatherApiKey +
           "&units=imperial"
@@ -52,7 +63,7 @@ $(document).ready(function () {
           return response.json();
         })
         .then(function (data) {
-       var currentCondition = document.querySelector("#current-condition");
+          console.log(data);
        currentCondition.innerHTML = "";
 
        var liElCityName = document.createElement("li");
@@ -71,15 +82,30 @@ $(document).ready(function () {
         var liElhumidity = document.createElement("li");
         liElhumidity.textContent = "Humidity: " + data.main.humidity;
         currentCondition.appendChild(liElhumidity);
+
+         // Store search history in local storage
+         var searchHistory = JSON.parse(localStorage.getItem("recentSearches")) || [];
+         searchHistory.push(searchInputValue);
+         localStorage.setItem("recentSearches", JSON.stringify(searchHistory));
+
+         // Display search history
+         displaySearchHistory(searchHistory);
+       });
+   }
+ });
       });
-    }
+    
+  
 
 
 //fething the 5 day forecast
-    if (searchInput != "") {
+searchBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  var searchInputValue = searchInput.value.trim();
+    if (searchInputValue != "") {
       fetch(
-        "https://api.openweathermap.org/data/2.5/weather?q=" +
-          searchInput +
+        "https://api.openweathermap.org/data/2.5/forecast?q=" +
+          searchInputValue +
           "&appid=" +
           weatherApiKey +
           "&units=imperial"
@@ -89,58 +115,50 @@ $(document).ready(function () {
         })
         .then(function (data) {
           console.log(data);
-          console.log(data.name);
-          var dateOne = document.querySelector('#date1');
-          var dateTwo = document.querySelector('#date2');
-          var dateThree = document.querySelector('#date3');
-          var dateFour = document.querySelector('#date4');
-          var dateFive = document.querySelector('#date5');
+      
+  //clear the previous data
+          dayOne.innerHTML = "";
+          dayTwo.innerHTML = "";
+          dayThree.innerHTML = "";
+          dayFour.innerHTML = "";
+          dayFive.innerHTML = "";
+      
+  //get data for  the first 5 days only
+  var forcastData = data.list.slice(0, 5);
+  console.log(forcastData);
+  //loop through the data
+  forcastData.forEach(function (forecast, index)  {
+  //get the data and time of the forecast
+  var forecastDate = dayjs(forecast.dt_txt);
+  console.log(forecastDate);
 
-          dateOne.textContent = "";
-          dateTwo.textContent = "";
-          dateThree.textContent = "";
-          dateFour.textContent = "";
-          dateFive.textContent = "";
+  //displays the date
+  var dateEl = document.querySelector('#date'+index);
+  dateEl.textContent = forecastDate.format("MM/DD/YYYY");
 
-          console.log(dateOne.textContent) 
+ 
 
-          var day2temp = document.querySelector('#day2temp');
-          var day2wind = document.querySelector('#day2wind');
-          var day2humidity = document.querySelector('#day2humidity');
-
-          day2temp.textContent = "Temperature: " + data.main.temp + " F";
-          day2wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
-          day2humidity.textContent = "Humidity: " + data.main.humidity;
-
-          var day3temp = document.querySelector('#day3temp');
-          var day3wind = document.querySelector('#day3wind');
-          var day3humidity = document.querySelector('#day3humidity');
-
-          day3temp.textContent = "Temperature: " + data.main.temp + " F";
-          day3wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
-          day3humidity.textContent = "Humidity: " + data.main.humidity;
-
-          var day4temp = document.querySelector('#day4temp');
-          var day4wind = document.querySelector('#day4wind');
-          var day4humidity = document.querySelector('#day4humidity');
-        
-          day4temp.textContent = "Temperature: " + data.main.temp + " F";
-          day4wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
-          day4humidity.textContent = "Humidity: " + data.main.humidity;
-
-          var day5temp = document.querySelector('#day5temp');
-          var day5wind = document.querySelector('#day5wind');
-          var day5humidity = document.querySelector('#day5humidity');
-
-          day5temp.textContent = "Temperature: " + data.main.temp + " F";
-          day5wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
-          day5humidity.textContent = "Humidity: " + data.main.humidity;
-
-        });
-    }
-          
   });
 });
+}
+});
+
+
+  // Display search history
+  var searchHistory = JSON.parse(localStorage.getItem("recentSearches")) || [];
+  displaySearchHistory(searchHistory);
+
+  function displaySearchHistory(searchHistory) {
+    var historyList = document.querySelector("#recent-searches");
+    historyList.innerHTML = "";
+
+    searchHistory.forEach(function (searchItem) {
+      var listItem = document.createElement("li");
+      listItem.textContent = searchItem;
+      historyList.appendChild(listItem);
+    });
+  }
+
 
 
 //searchInput.textContent = recentSearches;

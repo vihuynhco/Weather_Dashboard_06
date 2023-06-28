@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-    crossorigin="anonymous"/>
-    <link rel="stylesheet" href="style.css" />
+    crossorigin="anonymous"
+  />
     <title>Weather DashBoard</title>
 </head>
 
@@ -17,9 +17,8 @@
     <header class ="row">
         <h1 class="flex-row p-1 text-center text-white bg-primary">Weather DashBoard</h1>
     </header>
-
     <main>
-      <section class = "container my-5">
+      <section class="container my-5">
         <div class="row">
           <div class="col-12 col-md-4 col-lg-3" id="current-weather">
             <h3 class="p-1 text-center">Search for a City:</h3>
@@ -27,59 +26,72 @@
                 <input id="search-input" class="m-1 w-100" type="text">
                 <button type="submit" class="btn btn-block btn-primary btn-sm btn-custom w-100">Search</button>
               </form>
-              <div class = "m-2" id="recent-searches">Recent Searches</div>
+              <div class="m-2" id="recent-searches">Recent Searches</div>
           </div>
 
           <div class="col-12 col-md-8 col-lg-9">
             <h3 id="location">Location</h3>
             <ul id="current-condition"></ul>
           
-          <div class = "row">
-            <h3>5-Day Forecast:</h3>
-              <div class = "col-12 col-md-6 col-lg-4">
-                <h5 id="date1"></h5>
+            <div class="row">
+              <h3>5-Day Forecast:</h3>
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date0"></h5>
                 <div class="bg-primary"></div>
-                <ul id = "day1"></ul>
+                <ul id="day0"></ul>
               </div>
 
-              <div class = "col-12 col-md-6 col-lg-4">
-                <h5 id="date2">Insert date</h5>
-                <div class="bg-primary">day 2 </div>
-                <ul id = "day2"></ul>
-                  <li id = "day2temp"></li>
-                  <li id = "day2wind"></li>
-                  <li id = "day2humidity"></li>
-                
-
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date1"></h5>
+                <div id="day1" class="bg-primary">day 1 </div>
+                <ul id="day1ul">
+                  <li id="day1temp"></li>
+                  <li id="day1wind"></li>
+                  <li id="day1humidity"></li>
+                </ul>
               </div>
 
-                <div class = "col-12 col-md-6 col-lg-4">
-                  <h5 id="date3">Insert date</h5>
-                  <div class="bg-primary">day 3 </div>
-                  <ul id = "day3"></ul>
-                    <li id = "day3temp"></li>
-                    <li id = "day3wind"></li>
-                    <li id = "day3humidity"></li>
-                </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date2"></h5>
+                <div id="day2" class="bg-primary">day 2 </div>
+                <ul id="day2ul">
+                  <li id="day2temp"></li>
+                  <li id="day2wind"></li>
+                  <li id="day2humidity"></li>
+                </ul>
+              </div>
 
-                  <div class = "col-12 col-md-6 col-lg-4">
-                    <h5 id="date4">Insert date</h5>
-                    <div class="bg-primary">day 4 </div>
-                    <ul id = "day4"></ul>
-                      <li id = "day4temp"></li>
-                      <li id = "day4wind"></li>
-                      <li id = "day4humidity"></li>
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date3"></h5>
+                <div id="day3" class="bg-primary">day 3 </div>
+                <ul id="day3ul">
+                  <li id="day3temp"></li>
+                  <li id="day3wind"></li>
+                  <li id="day3humidity"></li>
+                </ul>
+              </div>
 
-                  </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date4"></h5>
+                <div id="day4" class="bg-primary">day 4 </div>
+                <ul id="day4ul">
+                  <li id="day4temp"></li>
+                  <li id="day4wind"></li>
+                  <li id="day4humidity"></li>
+                </ul>
+              </div>
 
-                  <div class = "col-12 col-md-6 col-lg-4">
-                    <h5 id="date5">Insert date</h5>
-                    <div class="bg-primary">day 5 </div>
-                    <ul id = "day5"></ul>
-                      <li id = "day5temp"></li>
-                      <li id = "day5wind"></li>
-                      <li id = "day5humidity"></li>
-                  </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <h5 id="date5"></h5>
+                <div id="day5" class="bg-primary">day 5 </div>
+                <ul id="day5ul">
+                  <li id="day5temp"></li>
+                  <li id="day5wind"></li>
+                  <li id="day5humidity"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -88,6 +100,11 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
+      integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
+      crossorigin="anonymous"
     ></script>
     <script src="script.js"></script>
 </body>
