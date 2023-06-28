@@ -19,3 +19,7 @@ https://github.com/vihuynhco/Weather_Dashboard_06
 
 Link to deployed location: 
 https://vihuynhco.github.io/Weather_Dashboard_06
+
+
+
+![Screenshot of App.](./Assets/image.png)
